@@ -155,8 +155,7 @@ document.getElementById('userForm').addEventListener('submit', function(event) {
     const userDescription = document.getElementById('userDescription').value;
 
     //Se crea un objeto
-    const newUser = {
-        id: users.length + 1, 
+    const newUser = { 
         user_name: userName,
         description: userDescription,
         age: userAge,
@@ -176,7 +175,7 @@ document.getElementById('userForm').addEventListener('submit', function(event) {
     //LLena la tarjeta y se agrega a la sección de perfiles
     renderElements(card, userElements);
     CARD_SECTION.append(card);
-    
+
     //se resetea el formulario
     document.getElementById('userForm').reset(); 
 });
