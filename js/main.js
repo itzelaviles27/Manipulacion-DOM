@@ -144,32 +144,40 @@ users.forEach(user => {
     CARD_SECTION.append(card);
 
 })
+// Cuando el usuario le de submit al boton se empezara a ejecutar lo siguiente
 document.getElementById('userForm').addEventListener('submit', function(event) {
+    //es para que pueda ser llamado de nuevo
     event.preventDefault();
 
+    //obtiene los valores que el usuario lleno
     const userName = document.getElementById('userName').value;
     const userAge = document.getElementById('userAge').value;
     const userDescription = document.getElementById('userDescription').value;
 
+    //Se crea un objeto
     const newUser = {
         id: users.length + 1, 
         user_name: userName,
         description: userDescription,
         age: userAge,
     };
-
+    //se agrega al arreglo el nuevo usuario
     users.push(newUser);
 
+    //Se crea la tarjeta y lo que contendra
     const card = createCard();
     const userElements = createDescription();
 
+    //Se asignan los valores
     userElements.user_name.textContent = userName;
     userElements.age.textContent = userAge;
     userElements.description.textContent = userDescription;
 
+    //LLena la tarjeta y se agrega a la sección de perfiles
     renderElements(card, userElements);
     CARD_SECTION.append(card);
-
+    
+    //se resetea el formulario
     document.getElementById('userForm').reset(); 
 });
 
