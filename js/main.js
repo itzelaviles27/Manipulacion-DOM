@@ -109,7 +109,7 @@ const createDescription = () => {
         user_name: document.createElement('h2'),
         age: document.createElement('h3'),
         description: document.createElement('p'),
-        bands: [],
+        bands: document.createElement('ul'),
     }
     return userElements;
 }
@@ -119,20 +119,21 @@ const populateElements = (user, userElements) => {
     userElements.age.textContent = user.age;
     userElements.description.textContent = user.description;
 
-    const bandList = user.fav_music.bands.map(e => {
-        const pElement = document.createElement('p');
-        pElement.textContent = e;
-        return pElement;
-    })
+    user.fav_music.bands.forEach(e => {
+        const liElement = document.createElement('li');
+        liElement.textContent = e;
+        userElements.bands.appendChild(liElement);
+    });
 
-    userElements.bands = bandList;
     return userElements;
 }
 
 
+
 const renderElements = (card, elements) => {
-    card.append(elements.user_name, elements.age, elements.description);
+    card.append(elements.user_name, elements.age, elements.description, elements.bands);
 }
+
 
 users.forEach(user => {
     const card = createCard();
@@ -143,11 +144,39 @@ users.forEach(user => {
     CARD_SECTION.append(card);
 
 })
+document.getElementById('userForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const userName = document.getElementById('userName').value;
+    const userAge = document.getElementById('userAge').value;
+    const userDescription = document.getElementById('userDescription').value;
+
+    const newUser = {
+        id: users.length + 1, 
+        user_name: userName,
+        description: userDescription,
+        age: userAge,
+    };
+
+    users.push(newUser);
+
+    const card = createCard();
+    const userElements = createDescription();
+
+    userElements.user_name.textContent = userName;
+    userElements.age.textContent = userAge;
+    userElements.description.textContent = userDescription;
+
+    renderElements(card, userElements);
+    CARD_SECTION.append(card);
+
+    document.getElementById('userForm').reset(); 
+});
+
 
 
 // EGERSISIO
 // 1. Agregar las bandas
-// PUSH 
 // EVITAR LAS BANDAS PARA EL EJERCICIO 2
 // 2. Obtener la info del usuario desde inputs y mostrar en tarjetas
 // Al menos deben tener 2 commits
